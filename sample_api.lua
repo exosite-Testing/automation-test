@@ -198,3 +198,48 @@ a = table.concat(t)
 t = { 3,2,5,1,4 }
 table.sort(t, function(a,b) return a<b end)
 a = table.concat(t)
+--#ENDPOINT GET /cpu
+--limited number of 64000 instructions per execution
+count = 0
+while true do
+count = count+1
+end
+--#ENDPOINT GET /memory
+--memory usage limits of 1Mb
+str = "abc"
+while true do
+str = str .. str
+end
+--#ENDPOINT GET /debugnil
+--include all invalid lua function which is nil type
+return (type(debug) == 'nil')
+--#ENDPOINT GET /stringnil
+--include all invalid lua function which is nil type
+return (type(string.dump) == 'nil')
+--#ENDPOINT GET /osnil
+--include all invalid lua function which is nil type
+return (type(os.execute) == 'nil')and (type(os.exit) == 'nil')
+and (type(os.getenv) == 'nil') and (type(os.remove) == 'nil')
+and (type(os.rename) == 'nil') and (type(os.setlocale) == 'nil')
+and (type(os.tmpname) == 'nil')
+--#ENDPOINT GET /importnil
+--include all invalid lua function which is nil type
+return (type(import) == 'nil')
+--#ENDPOINT GET /gc
+--if gc can be used, it will return how many Ram have been used
+response.message = collectgarbage("count")*100
+--#ENDPOINT GET /dofile
+--if file is not existing,it will throw error message
+dofile("doesnt_exist.doesnt_exist")
+--#ENDPOINT GET /load
+--a should be 100 after excuting load function
+load(function() a=100 end)()
+response.message = a
+--#ENDPOINT GET /loadfile
+--if loadfile failed,res will be nil and an error message
+res,err = loadfile("doesnt_exist")
+response.message = err
+--#ENDPOINT GET /loadstring
+--a should be 100 after excuting loadstring function
+loadstring("a = 100")()
+response.message = a
