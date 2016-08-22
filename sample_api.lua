@@ -198,48 +198,92 @@ a = table.concat(t)
 t = { 3,2,5,1,4 }
 table.sort(t, function(a,b) return a<b end)
 a = table.concat(t)
---#ENDPOINT GET /cpu
+--#ENDPOINT GET /cpu/{times}
 --limited number of 64000 instructions per execution
-count = 0
-while true do
-count = count+1
+times = request.parameters.times
+for i=0,times do
 end
---#ENDPOINT GET /memory
+--#ENDPOINT GET /memory/{times}
 --memory usage limits of 1Mb
+times = request.parameters.times
 str = "abc"
-while true do
-str = str .. str
+for i=0,times do
+  str = str .. str
 end
---#ENDPOINT GET /debugnil
+--#ENDPOINT GET /debug
 --include all invalid lua function which is nil type
 return (type(debug) == 'nil')
---#ENDPOINT GET /stringnil
+--#ENDPOINT GET /debug/{functionName}
+functionName = request.parameters.functionName
+if functionName == "debug" then
+  return (type(debug.debug) == "nil")
+elseif functionName == "getfenv" then
+  return (type(debug.getfenv) == "nil")
+elseif functionName == "gethook" then
+  return (type(debug.gethook) == "nil")
+elseif functionName == "getinfo" then
+  return (type(debug.getinfo) == "nil")
+elseif functionName == "getlocal" then
+  return (type(debug.getlocal) == "nil")
+elseif functionName == "getmetatable" then
+  return (type(debug.getmetatable) == "nil")
+elseif functionName == "getregistry" then
+  return (type(debug.getregistry) == "nil")
+elseif functionName == "getupvalue" then
+  return (type(debug.getupvalue) == "nil")
+elseif functionName == "setfenv" then
+  return (type(debug.setfenv) == "nil")
+elseif functionName == "sethook" then
+  return (type(debug.sethook) == "nil")
+elseif functionName == "setlocal" then
+  return (type(debug.setlocal) == "nil")
+elseif functionName == "setmetatable" then
+  return (type(debug.setmetatable) == "nil")
+elseif functionName == "setupvalue" then
+  return (type(debug.setupvalue) == "nil")
+elseif functionName == "traceback" then
+  return (type(debug.traceback) == "nil")
+end
+--#ENDPOINT GET /string/dump
 --include all invalid lua function which is nil type
 return (type(string.dump) == 'nil')
---#ENDPOINT GET /osnil
---include all invalid lua function which is nil type
-return (type(os.execute) == 'nil')and (type(os.exit) == 'nil')
-and (type(os.getenv) == 'nil') and (type(os.remove) == 'nil')
-and (type(os.rename) == 'nil') and (type(os.setlocale) == 'nil')
-and (type(os.tmpname) == 'nil')
---#ENDPOINT GET /importnil
+--#ENDPOINT GET /os/{functionName}
+functionName = request.parameters.functionName
+if functionName == "execute" then
+  return (type(os.execute) == "nil")
+elseif functionName == "exit" then
+  return (type(os.exit) == "nil")
+elseif functionName == "getenv" then
+  return (type(os.getenv) == "nil")
+elseif functionName == "remove" then
+  return (type(os.remove) == "nil")
+elseif functionName == "rename" then
+  return (type(os.rename) == "nil")
+elseif functionName == "setlocale" then
+  return (type(os.setlocale) == "nil")
+elseif functionName == "tmpname" then
+  return (type(os.tmpname) == "nil")
+end
+--#ENDPOINT GET /basic/import
 --include all invalid lua function which is nil type
 return (type(import) == 'nil')
---#ENDPOINT GET /gc
+--#ENDPOINT GET /basic/gc
 --if gc can be used, it will return how many Ram have been used
 response.message = collectgarbage("count")*100
---#ENDPOINT GET /dofile
+--#ENDPOINT GET /basic/dofile
 --if file is not existing,it will throw error message
 dofile("doesnt_exist.doesnt_exist")
---#ENDPOINT GET /load
+--#ENDPOINT GET /basic/load
 --a should be 100 after excuting load function
 load(function() a=100 end)()
 response.message = a
---#ENDPOINT GET /loadfile
+--#ENDPOINT GET /basic/loadfile
 --if loadfile failed,res will be nil and an error message
 res,err = loadfile("doesnt_exist")
 response.message = err
---#ENDPOINT GET /loadstring
+--#ENDPOINT GET /basic/loadstring
 --a should be 100 after excuting loadstring function
 loadstring("a = 100")()
 response.message = a
+--#ENDPOINT GET /basic/require
+return type(require) == 'nil'
