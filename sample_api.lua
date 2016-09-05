@@ -51,7 +51,7 @@ Keystore.set({key=request.parameters.key,
 times = request.parameters.times
 for i=0,times do
 end
---#ENDPOINT GET /memory/{times}
+--#ENDPOINT GET /memory/memory/{times}
 --memory usage limits of 1Mb
 times = request.parameters.times
 str = "abc"
