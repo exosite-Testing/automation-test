@@ -1,4 +1,5 @@
 {
+  "version": "0.2",
   "default_page": "index.html",
   "file_dir": "public",
   "custom_api": "sample_api.lua",
