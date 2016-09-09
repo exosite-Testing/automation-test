@@ -14,5 +14,11 @@
     "timer": {
       "timer": "event_handler/timer.lua"
     }
+},
+  "cors": {
+    "origin": ["http://localhost:*"],
+    "methods":["get", "post"],
+    "expose_headers": ["X-Key"],
+    "credentials": true
   }
 }
