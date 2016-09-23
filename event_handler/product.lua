@@ -1,5 +1,6 @@
 Timeseries.write({
-  query = data.alias .. ",identifier=" .. data.device_sn .. " value=" .. data.value[2]
+  query = data.alias .. ",identifier=" ..
+  data.device_sn .. " value=" .. data.value[2]
 })
 local resp = Keystore.get({key = "identifier_" .. data.device_sn})
 local value = {
