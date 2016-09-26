@@ -17,8 +17,8 @@
     }
 },
   "cors": {
-    "origin": ["http://localhost:*"],
-    "methods":["get", "post"],
+    "origin": ["http://localhost:*","https://*"],
+    "methods":["get", "delete","put"],
     "expose_headers": ["X-Key"],
     "credentials": true
   }
