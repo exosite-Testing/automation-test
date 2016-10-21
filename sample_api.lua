@@ -388,3 +388,10 @@ elseif functionName == "sort" then
   table.sort(t, function(a,b) return a<b end)
   response.message = table.concat(t)
 end
+--#ENDPOINT GET /cause/error
+local data = {
+  ["request_id"] = "wsRid",
+  ["server_ip"] = "wsSip",
+  message = "wsMsg"
+}
+return Websocket.send(data)
