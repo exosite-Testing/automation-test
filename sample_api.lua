@@ -395,3 +395,8 @@ local data = {
   message = "wsMsg"
 }
 return Websocket.send(data)
+
+--#ENDPOINT POST /plain text/plain
+response.message = request.body
+--#ENDPOINT POST /form application/x-www-form-urlencoded
+response.message = request.body
