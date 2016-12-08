@@ -58,20 +58,10 @@ str = "abc"
 for i=0,times do
   str = str .. str
 end
---#ENDPOINT GET /memory/notover/1MB
-tb = {}
-for i=0,math.pow(2, 13) do
-  --31 of \65
-  table.insert(tb,"\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65")
-end
-str = table.concat(tb,nil)
---#ENDPOINT GET /memory/over/1MB
-tb = {}
-for i=0,math.pow(2, 13) do
-  --32 of \65
-  table.insert(tb,"\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65\65")
-end
-str = table.concat(tb,nil)
+--#ENDPOINT GET /memory/1MB
+return string.rep(".", 524288):len()
+--#ENDPOINT GET /memory/10MB
+return string.rep(".", 5100100):len()
 --#ENDPOINT GET /debug
 --include all invalid lua function which is nil type
 return (type(debug) == 'nil')
