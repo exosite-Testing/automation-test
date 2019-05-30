@@ -1,0 +1,23 @@
+info:
+  name: QA testing custom API
+  summary: TBD
+  description: QA testing custom API
+  authors: ["you@biz.com"]
+  version: 1.0.0
+
+assets:
+  location: assets
+  include: '**/*'
+  default_page: index.html
+
+endpoints:
+  location: routes
+  include: '**/*.lua'
+
+modules:
+  location: modules
+  include: ['*.lua', 'src/*.lua', 'migrations/*.lua']
+
+services:
+  location: services
+  include: '**/*.lua'
